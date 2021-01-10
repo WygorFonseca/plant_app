@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 // Componentes
 import 'package:plant_app/components/HeaderWithSearch.dart';
+import 'package:plant_app/components/TitleWithMoreBtn.dart';
 
 class HomePage extends StatelessWidget {
   @override
@@ -28,81 +29,175 @@ class Body extends StatelessWidget {
       child: Column(
         children: [
           HeaderWithSearch(size: size),
-          TitleWithMoreButton()
-        ],
-      ),
-    );
-  }
-}
+          TitleWithMoreButton(title: 'Recomendado', onPress: () {}),
+          NotificationListener<OverscrollIndicatorNotification>(
+            onNotification: (overscroll) {
+              overscroll.disallowGlow();
 
-class TitleWithMoreButton extends StatelessWidget {
-  const TitleWithMoreButton({
-    Key key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          TextWithCustomUnderline(text: 'Recomendado'),
-          FlatButton(
-            onPressed: () {},
-            color: Theme.of(context).primaryColor,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(20.0)
-            ),
-            child: Text(
-              'Mais',
-              style: TextStyle(
-                color: Colors.white
-              ),
-            )
-          )
-        ],
-      ),
-    );
-  }
-}
-
-class TextWithCustomUnderline extends StatelessWidget {
-  const TextWithCustomUnderline({
-    Key key,
-    this.text,
-  }) : super(key: key);
-
-  final String text;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 24,
-      child: Stack(
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(
-              left: 5.0
-            ),
-            child: Text(
-              text,
-              style: TextStyle(
-                fontSize: 20.0,
-                fontWeight: FontWeight.bold
+              return true;
+            },
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.only(right: 20.0),
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                children: [
+                  RecommendedPlantCard(
+                    name: 'Solange',
+                    country: 'Rússia',
+                    price: '16,90',
+                    image: 'assets/images/planta_1.png',
+                  ),
+                  RecommendedPlantCard(
+                    name: 'Jéssica',
+                    country: 'Brasil',
+                    price: '16,90',
+                    image: 'assets/images/planta_2.png',
+                  ),
+                  RecommendedPlantCard(
+                    name: 'Lexa',
+                    country: 'Canadá',
+                    price: '16,90',
+                    image: 'assets/images/planta_3.png',
+                  )
+                ],
               ),
             ),
           ),
-          Positioned(
-            left: 0,
-            right: 0,
-            bottom: 0,
-            child: Container(
-              height: 7.0,
-              margin: EdgeInsets.only(
-                right: 5.0
+          TitleWithMoreButton(title: 'Plantas em alta', onPress: () {}),
+          NotificationListener<OverscrollIndicatorNotification>(
+            onNotification: (overscroll) {
+              overscroll.disallowGlow();
+
+              return true;
+            },
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.only(
+                right: 20.0,
+                bottom: 30.0
               ),
-              color: Theme.of(context).primaryColor.withOpacity(0.2),
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                children: [
+                  FeaturePlantCard(image: "assets/images/planta_bot_1.png", onPress: () {}),
+                  FeaturePlantCard(image: "assets/images/planta_bot_0.png", onPress: () {}),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class FeaturePlantCard extends StatelessWidget {
+  const FeaturePlantCard({
+    Key key,
+    this.onPress,
+    @required this.image,
+  }) : super(key: key);
+
+  final String image;
+  final Function onPress;
+
+  @override
+  Widget build(BuildContext context) {
+    final Size size = MediaQuery.of(context).size;
+
+    return GestureDetector(
+      onTap: onPress,
+      child: Container(
+        margin: EdgeInsets.only(
+          left: 20.0,
+          top: 10.0,
+          bottom: 10.0
+        ),
+        width: size.width * 0.8,
+        height: 185,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          image: DecorationImage(
+            fit: BoxFit.cover,
+            image: AssetImage(image)
+          )
+        ),
+      ),
+    );
+  }
+}
+
+class RecommendedPlantCard extends StatelessWidget {
+  const RecommendedPlantCard({
+    Key key,
+    this.onPress,
+    @required this.name,
+    @required this.price,
+    @required this.image,
+    @required this.country,
+  }) : super(key: key);
+
+  final String image, name, country, price;
+  final Function onPress;
+
+  @override
+  Widget build(BuildContext context) {
+    final Size size = MediaQuery.of(context).size;
+
+    return Container(
+      width: size.width * 0.4,
+      margin: const EdgeInsets.only(
+        top: 10.0,
+        left: 20.0,
+        bottom: 50.0,
+      ),
+      child: Column(
+        children: [
+          Image.asset(image),
+          GestureDetector(
+            onTap: onPress,
+            child: Container(
+              padding: const EdgeInsets.all(10.0),
+              decoration: BoxDecoration(
+                color: const Color(0xFFFFFFFF),
+                boxShadow: [
+                  BoxShadow(
+                    offset: const Offset(0, 10),
+                    blurRadius: 30.0,
+                    color: Theme.of(context).primaryColor.withOpacity(0.15)
+                  )
+                ],
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(10.0),
+                  bottomRight: Radius.circular(10.0),
+                ),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  RichText(
+                    text: TextSpan(
+                      children: <TextSpan> [
+                        TextSpan(
+                          text: '$name'.toUpperCase(),
+                          style: Theme.of(context).textTheme.button
+                        ),
+                        TextSpan(
+                          text: '\n$country'.toUpperCase(),
+                          style: TextStyle(
+                            color: Theme.of(context).primaryColor.withOpacity(0.5)
+                          )
+                        )
+                      ]
+                    )
+                  ),
+                  Text(
+                    'R\$ $price',
+                    style: Theme.of(context).textTheme.button.copyWith(
+                      color: Theme.of(context).primaryColor
+                    ),
+                  )
+                ],
+              ),
             ),
           )
         ],
