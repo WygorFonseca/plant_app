@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 // Componentes
 import 'package:plant_app/components/HeaderWithSearch.dart';
 import 'package:plant_app/components/TitleWithMoreBtn.dart';
+import 'package:plant_app/components/BottomNavigationBar.dart';
+import 'package:plant_app/pages/PlantDetailsPage.dart';
 
 class HomePage extends StatelessWidget {
   @override
@@ -16,40 +18,7 @@ class HomePage extends StatelessWidget {
         ),
       ),
       body: Body(),
-      bottomNavigationBar: Container(
-        height: 60,
-        // padding: const EdgeInsets.only(
-        //   left: 40.0,
-        //   right: 40.0,
-        // ),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          boxShadow: [
-            BoxShadow(
-              blurRadius: 24.0,
-              offset: Offset(0, -10),
-              color: Theme.of(context).primaryColor.withOpacity(0.15)
-            )
-          ]
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            IconButton(
-              icon: Image.network("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSXNSH0bNSacDv7Q3Ew0_WxzPVMg0rt6kozoA&usqp=CAU"),
-              onPressed: () {},
-            ),
-            IconButton(
-              icon: Icon(Icons.follow_the_signs),
-              onPressed: () {},
-            ),
-            IconButton(
-              icon: Icon(Icons.person_outline),
-              onPressed: () {},
-            ),
-          ],
-        ),
-      ),
+      bottomNavigationBar: NavigationBarWidget()
     );
   }
 }
@@ -80,18 +49,27 @@ class Body extends StatelessWidget {
                     country: 'Rússia',
                     price: '16,90',
                     image: 'assets/images/planta_1.png',
+                    onPress: () => Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => PlantDetailsPage()
+                    )),
                   ),
                   RecommendedPlantCard(
                     name: 'Jéssica',
                     country: 'Brasil',
                     price: '16,90',
                     image: 'assets/images/planta_2.png',
+                    onPress: () => Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => PlantDetailsPage()
+                    )),
                   ),
                   RecommendedPlantCard(
                     name: 'Lexa',
                     country: 'Canadá',
                     price: '16,90',
                     image: 'assets/images/planta_3.png',
+                    onPress: () => Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => PlantDetailsPage()
+                    )),
                   )
                 ],
               ),
@@ -177,19 +155,19 @@ class RecommendedPlantCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
 
-    return Container(
-      width: size.width * 0.4,
-      margin: const EdgeInsets.only(
-        top: 10.0,
-        left: 20.0,
-        bottom: 50.0,
-      ),
-      child: Column(
-        children: [
-          Image.asset(image),
-          GestureDetector(
-            onTap: onPress,
-            child: Container(
+    return GestureDetector(
+      onTap: onPress,
+      child: Container(
+        width: size.width * 0.4,
+        margin: const EdgeInsets.only(
+          top: 10.0,
+          left: 20.0,
+          bottom: 50.0,
+        ),
+        child: Column(
+          children: [
+            Image.asset(image),
+            Container(
               padding: const EdgeInsets.all(10.0),
               decoration: BoxDecoration(
                 color: const Color(0xFFFFFFFF),
@@ -232,9 +210,9 @@ class RecommendedPlantCard extends StatelessWidget {
                   )
                 ],
               ),
-            ),
-          )
-        ],
+            )
+          ],
+        ),
       ),
     );
   }
