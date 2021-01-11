@@ -28,7 +28,7 @@ class PlantDetailsPage extends StatelessWidget {
                               alignment: Alignment.topLeft,
                               child: IconButton(
                                 icon: Icon(Icons.arrow_back),
-                                onPressed: () {},
+                                onPressed: () => Navigator.of(context).pop(),
                                 padding: const EdgeInsets.symmetric(
                                   horizontal: 20.0
                                 ),

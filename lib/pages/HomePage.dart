@@ -75,7 +75,7 @@ class Body extends StatelessWidget {
               ),
             ),
           ),
-          TitleWithMoreButton(title: 'Plantas em alta', onPress: () {}),
+          TitleWithMoreButton(title: 'Plantas populares', onPress: () {}),
           NotificationListener<OverscrollIndicatorNotification>(
             onNotification: (overscroll) {
               overscroll.disallowGlow();

@@ -27,15 +27,15 @@ class NavigationBarWidget extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           IconButton(
-            icon: Image.network("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSXNSH0bNSacDv7Q3Ew0_WxzPVMg0rt6kozoA&usqp=CAU"),
+            icon: Image.network("https://d1nhio0ox7pgb.cloudfront.net/_img/g_collection_png/standard/512x512/plant.png", width: 32,),
             onPressed: () {},
           ),
           IconButton(
-            icon: Icon(Icons.follow_the_signs),
+            icon: Image.asset("assets/images/heart.png"),
             onPressed: () {},
           ),
           IconButton(
-            icon: Icon(Icons.person_outline),
+            icon: Image.asset("assets/images/profile.png"),
             onPressed: () {},
           ),
         ],
